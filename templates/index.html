@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Campus</title>
+</head>
+<body>
+    <div>
+        <img src="{{ url_for('static', filename='board.png') }}" width="{{width*scale}}px" height="{{height*scale}}px" usemap="#systemboard">
+            <map name="systemboard">
+                {% for coor in coords %}
+                    <area shape="rect" coords="{{ coor[0] * (scale + scalefix) }}, {{ coor[1] * (scale + scalefix) }}, {{ coor[2] * (scale + scalefix) }}, {{ coor[3] * (scale + scalefix) }}" onclick="displayRect({{ coor[0] * (scale + scalefix) }}, {{ coor[1] * (scale + scalefix) }}, {{ coor[2] * (scale + scalefix) }}, {{ coor[3] * (scale + scalefix) }})">
+                {% endfor %}
+            </map>
+            <canvas id="boardcanvas" width="{{width*scale}}px" height="{{height*scale}}px"></canvas>
+
+    </div>
+</body>
+</html>
+
+
+<script>
+        function displayRect(x1, y1, x2, y2) {
+
+            let width = x2 - x1;
+            let height = y2 - y1;
+
+            var c = document.getElementById("boardcanvas");
+            var ctx = c.getContext("2d");
+
+            console.log(!ctx.getImageData(x1, y1, width, height).data.some(channel => channel !== 0))
+
+            if (!ctx.getImageData(x1+8, y1+8, width, height).data.some(channel => channel !== 0)) {
+                ctx.beginPath();
+                ctx.rect(x1+8, y1+8, width, height);
+                ctx.fillStyle = "rgba(0, 150, 255, 0.7)";
+                ctx.fill();
+            } else {
+                ctx.clearRect(x1+7, y1+7, width+2, height+2);
+            }
+        }
+</script>
+
