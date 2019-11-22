@@ -9,7 +9,7 @@
 
 from flask import Flask, render_template, url_for, redirect, flash, request, session, jsonify
 from flask_pymongo import PyMongo
-from find_rects import update_flask
+#from find_rects import update_flask
 from passlib.hash import sha256_crypt
 from functions import login_required, Rectangles
 from SECRETS import *
