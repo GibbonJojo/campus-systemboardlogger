@@ -11,7 +11,7 @@ from flask import Flask, render_template, url_for, redirect, flash, request, ses
 from flask_pymongo import PyMongo
 #from find_rects import update_flask
 from passlib.hash import sha256_crypt
-from functions import login_required, Rectangles
+from functions import login_required#, Rectangles
 from SECRETS import *
 
 app = Flask(__name__)

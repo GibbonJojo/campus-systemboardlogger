@@ -1,5 +1,5 @@
 from flask import session, redirect, url_for, flash
-from find_rects import update_flask
+#from find_rects import update_flask
 from functools import wraps
 
 
@@ -15,9 +15,9 @@ def login_required(f):
     return wrap
 
 
-class Rectangles:
-    def __init__(self):
-        self.coordinates = update_flask()
+# class Rectangles:
+#     def __init__(self):
+#         self.coordinates = update_flask()
 
-    def update_coordinates(self):
-        self.coordinates = update_flask()
+#     def update_coordinates(self):
+#         self.coordinates = update_flask()
