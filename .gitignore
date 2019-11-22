@@ -9,9 +9,8 @@ __pycache__/
 .vscode/
 .Ressources/old/
 
-SECRETS.py
-
-db_setup.py
+#SECRETS.py
+#db_setup.py
 
 # Distribution / packaging
 .Python
