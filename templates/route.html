@@ -2,6 +2,7 @@
 {% block content %}
 <h1>{{ route["name"] }}</h1>
 <h3>{{ route["difficulty"] }}</h3>
+<h5>{{ route["author"] }}</h5>
 <div class="routecontainer" width="{{width*scale}}px">
     <img class="boardimage" src="{{ url_for('static', filename='grayboard.png') }}" width="{{width*scale}}px" height="{{height*scale}}px" usemap="#systemboard">
     <div class="overlay" style="background: url({{ route['canvasData'] }}); width:{{width*scale}}px; height:{{height*scale}}px" ></div>

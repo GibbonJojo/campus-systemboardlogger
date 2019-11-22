@@ -62,6 +62,7 @@ def save():
             name = req["name"]
             difficulty = req["difficulty"]
             canvasData = req["canvasData"]
+            author = session["username"]
 
             insert_res = db.routes.insert_one({"name": name, "difficulty": difficulty, "canvasData": canvasData})
 
