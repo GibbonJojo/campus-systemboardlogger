@@ -1,0 +1,22 @@
+{% extends "_header.html" %}
+{% block content %}
+<form action="" method="post" enctype="multipart/form-data">
+    <dl>
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" value="{{ request.form.username }}" required>
+    </dl>
+
+    <dl>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required>
+    </dl>
+
+    <dl>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" required>
+    </dl>
+
+    <input type="submit" value="Register">
+</form>
+
+{% endblock %}

@@ -41,6 +41,7 @@ def vectors_to_coords(*args):
     return coords
 
 def update_flask():
+
     pathone = r"./ressources/rects1.png"
     pathtwo = r"./ressources/rects2.png"
 
@@ -76,3 +77,7 @@ if __name__ == "__main__":
     #     if cv2.waitKey(25) & 0xFF == ord('q'):
     #         cv2.destroyAllWindows()
     #         break
+
+    i = cv2.imread(r"./ressources/board.png")
+    g = cv2.cvtColor(i, cv2.COLOR_BGR2GRAY)
+    cv2.imwrite(r"./ressources/grayboard.png", g)

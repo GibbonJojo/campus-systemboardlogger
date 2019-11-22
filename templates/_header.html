@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+    <title>Campus Systemboard-Logger</title>
+</head>
+<body>
+    <header>
+        <nav>
+
+            <button><a href="{{ url_for('index') }}">Home</a></button>
+            <button><a href="{{ url_for('all') }}">Alle Routen</a></button>
+
+            {% if session['logged_in'] != True %}
+            <button href=><a href="{{ url_for('register') }}">Registrieren</a></button>
+            <button><a href="{{ url_for('login') }}">Login</a></button>
+            {% endif %}
+
+            {% if session['logged_in'] == True %}
+            <button><a href="{{ url_for('logout') }}">Logout</a></button>
+            <button><a href="{{ url_for('new') }}">Neu</a></button>
+            <button><a href="{{ url_for('myroutes') }}">Meine Routen</a></button>
+            <button><a href="{{ url_for('profile') }}">Profil</a></button>
+            {% endif %}
+
+            {% if "save" in buttons %}
+            <button class="save-route" onclick="saveRouteForm()">Route speichern</button>
+            {% endif %}
+            <button><a href="{{ url_for('delete') }}">Route löschen</a></button>
+
+            <button>Done</button>
+
+        </nav>
+    </header>
+
+    <div class="container-fluid" style="min-height:86.4vh; position:relative">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div id="alert">
+                            {{message}}
+                            <button onclick="destroyalert('alert')" id="alert" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div>
+            {% block content %} {% endblock %}
+            </div>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+    function destroyalert(id) {
+        let elem = document.getElementById(id)
+        elem.parentElement.removeChild(elem)
+    }
+</script>
+
+{% block scripts %}
+{% endblock %}

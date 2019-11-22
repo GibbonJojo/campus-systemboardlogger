@@ -1,0 +1,105 @@
+{% extends "_header.html" %}
+
+{% block content %}
+    <div class="container" style="width: {{width*scale}}px;">
+        <div class="map">
+            <img class="boardimage" src="{{ url_for('static', filename='grayboard.png') }}" width="{{width*scale}}px" height="{{height*scale}}px" usemap="#systemboard">
+            <map name="systemboard">
+                {% for coor in coords %}
+                    <area shape="rect" coords="{{ coor[0] * scale }}, {{ coor[1] * scale }}, {{ coor[2] * scale }}, {{ coor[3] * scale }}" onclick="displayRect({{ coor[0] * scale }}, {{ coor[1] * scale }}, {{ coor[2] * scale }}, {{ coor[3] * scale }} )">
+                {% endfor %}
+            </map>
+            <canvas id="boardcanvas" width="{{width*scale}}px" height="{{height*scale}}px"></canvas>
+        </div>
+
+    <div class="save-route-popup" id="save-route-popup">
+        <div>
+            <h1>Save Route</h1>
+
+            <label for="name"><b>Name</b></label>
+            <input type="text" name="name" id="routename" required>
+
+            <label for="difficulty"><b>Schwierigkeit</b></label>
+            <select name="difficulty" id="difficulty">
+                <option value="green">Grün</option>
+                <option value="yellow">Gelb</option>
+                <option value="blue">Blau</option>
+                <option value="red">Rot</option>
+                <option value="magenta">Magenta</option>
+                <option value="white">Weiß</option>
+                <option value="black">Schwarz</option>
+            </select>
+
+            <button type="submit" class="btn" id="saveButton" onclick="getRouteData();">Speichern</button>
+            <button type="button" class="btn cancel" onclick="closeForm();">Schließen</button>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+        function displayRect(x1, y1, x2, y2) {
+
+            let width = x2 - x1;
+            let height = y2 - y1;
+
+            var c = document.getElementById("boardcanvas");
+            var ctx = c.getContext("2d");
+
+            if (!ctx.getImageData(x1, y1, width, height).data.some(channel => channel !== 0)) {
+                ctx.beginPath();
+                ctx.rect(x1, y1, width, height);
+                ctx.fillStyle = "rgba(0, 150, 255, 0.4)";
+                ctx.fill();
+            } else {
+                ctx.clearRect(x1-1, y1-1, width+2, height+2);
+            }
+        }
+
+        function saveRouteForm() {
+            document.getElementById("save-route-popup").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("save-route-popup").style.display = "none";
+        }
+
+        function getRouteData() {
+            let name = document.getElementById("routename")
+            let difficulty = document.getElementById("difficulty")
+            let canvas = document.getElementById("boardcanvas");
+
+            let dataURI = canvas.toDataURL()
+
+            let entry = {
+                name: name.value,
+                difficulty: difficulty.value,
+                canvasData: dataURI
+            };
+
+            fetch(`${window.origin}/save/`, {
+                method: "POST",
+                credentials: "include",
+                body: JSON.stringify(entry),
+                cache: "no-cache",
+                headers: new Headers({
+                  "content-type": "application/json",
+                  "Accept": 'application/json'
+                })
+              })
+              .then(function(response) {
+                if (response.status !== 200) {
+                  console.log(`Looks like there was a problem. Status code: ${response.status}`);
+                  return;
+                }
+                window.location.href = "{{ url_for('index') }}";
+              })
+              .catch(function(error) {
+                console.log("Fetch error: " + error);
+            });
+        }
+
+</script>
+{% endblock %}
