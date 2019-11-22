@@ -1,5 +1,3 @@
-!pip install opencv-python
-!apt update && apt install -y libsm6 libxext6
 import cv2
 
 
@@ -56,14 +54,14 @@ def update_flask():
 
 
 # just for testing
-if __name__ == "__main__":
-    pathone = r"./ressources/rects1.png"
-    pathtwo = r"./ressources/rects2.png"
+#if __name__ == "__main__":
+    #pathone = r"./ressources/rects1.png"
+    #pathtwo = r"./ressources/rects2.png"
 
-    one = getrect(pathone)
-    two = getrect(pathtwo)
-    coords = vectors_to_coords(one, two)
-    print(len(coords))
+    #one = getrect(pathone)
+    #two = getrect(pathtwo)
+    #coords = vectors_to_coords(one, two)
+    #print(len(coords))
     # # uncomment, if you want to write and display the rectangles
     # image = cv2.imread(r"./ressources/board.png")
 
@@ -81,6 +79,6 @@ if __name__ == "__main__":
     #         cv2.destroyAllWindows()
     #         break
 
-    i = cv2.imread(r"./ressources/board.png")
-    g = cv2.cvtColor(i, cv2.COLOR_BGR2GRAY)
-    cv2.imwrite(r"./ressources/grayboard.png", g)
+    #i = cv2.imread(r"./ressources/board.png")
+    #g = cv2.cvtColor(i, cv2.COLOR_BGR2GRAY)
+    #cv2.imwrite(r"./ressources/grayboard.png", g)
